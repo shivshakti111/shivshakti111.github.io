@@ -1,0 +1,743 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>BK Vijay — Full-Stack Developer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+
+<style>
+/* ── Layout: sticky nav + full-width hero, projects in 2-col grid, footer ── */
+:root {
+  --bg: #0f0f13;
+  --surface: #17171f;
+  --surface2: #1e1e2a;
+  --border: rgba(255,255,255,0.08);
+  --fg: #e8e8f0;
+  --muted: #8888a0;
+  --accent: #e53935;
+  --accent2: #ff6f61;
+  --tag-bg: rgba(229,57,53,0.12);
+  --tag-fg: #ff8a80;
+  color-scheme: dark;
+
+  --f-display: 'Syne', system-ui, sans-serif;
+  --f-body: 'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: rgba(15,15,19,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 5vw, 64px);
+  height: 60px;
+}
+.nav-logo { font-family: var(--f-display); font-weight: 800; font-size: 18px; color: var(--fg); letter-spacing: -0.5px; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--fg); }
+
+/* HERO */
+.hero {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 80px clamp(0px, 2vw, 32px) 64px;
+  text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+h1 {
+  font-family: var(--f-display);
+  font-size: clamp(36px, 7vw, 68px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  text-wrap: balance;
+  margin-bottom: 20px;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.hero-sub {
+  color: var(--muted);
+  font-size: clamp(15px, 2vw, 17px);
+  max-width: 560px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+}
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 40px; }
+.tag { background: var(--surface2); color: var(--muted); font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); }
+.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: var(--surface); }
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 0;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 80px;
+}
+.stat {
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+  padding: 28px 16px;
+  border-right: 1px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-num { font-family: var(--f-display); font-size: 32px; font-weight: 800; color: var(--fg); letter-spacing: -1px; line-height: 1; margin-bottom: 4px; }
+.stat-num span { color: var(--accent); }
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+
+/* SECTION */
+.section { max-width: 1100px; margin: 0 auto; padding: 0 clamp(0px, 2vw, 32px) 96px; }
+.section-header { margin-bottom: 40px; }
+.section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+h2 { font-family: var(--f-display); font-size: clamp(26px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; text-wrap: balance; }
+.section-sub { color: var(--muted); font-size: 15px; margin-top: 8px; max-width: 480px; }
+
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 24px; }
+@media (max-width: 560px) { .projects-grid { grid-template-columns: 1fr; } }
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.project-card:hover { transform: translateY(-3px); border-color: rgba(229,57,53,0.3); }
+
+.project-screen {
+  aspect-ratio: 16/9;
+  background: var(--surface2);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.screen-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+}
+/* Blood Donation */
+.screen-blood { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+.screen-blood .ui-mock { width: 88%; height: 80%; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; overflow: hidden; }
+.ui-sidebar { width: 28%; background: rgba(198,40,40,0.15); border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; gap: 8px; padding: 12px 8px; }
+.ui-sidebar-item { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); }
+.ui-sidebar-item.active { background: #c62828; width: 70%; }
+.ui-main { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.ui-topbar { height: 10px; background: rgba(255,255,255,0.07); border-radius: 4px; width: 60%; }
+.ui-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
+.ui-card { background: rgba(255,255,255,0.06); border-radius: 5px; padding: 8px; height: 36px; }
+.ui-card .num { height: 8px; background: #c62828; border-radius: 3px; width: 50%; margin-bottom: 4px; }
+.ui-card .lbl { height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; width: 80%; }
+.ui-table-row { height: 7px; background: rgba(255,255,255,0.05); border-radius: 3px; }
+
+/* Wallet */
+.screen-wallet { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); }
+.wallet-mock { width: 55%; aspect-ratio: 9/16; max-height: 85%; background: linear-gradient(145deg, #1c1c2e, #2a2a3e); border-radius: 24px; display: flex; flex-direction: column; padding: 16px 12px; gap: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); }
+.w-topbar { display: flex; justify-content: space-between; align-items: center; }
+.w-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; }
+.w-lbl { height: 6px; width: 40px; background: rgba(255,255,255,0.15); border-radius: 3px; }
+.w-balance-box { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 14px; padding: 14px; }
+.w-bal-lbl { height: 5px; width: 50px; background: rgba(255,255,255,0.4); border-radius: 3px; margin-bottom: 8px; }
+.w-bal-num { height: 14px; width: 90px; background: white; border-radius: 4px; margin-bottom: 4px; }
+.w-bal-sub { height: 4px; width: 60px; background: rgba(255,255,255,0.4); border-radius: 3px; }
+.w-txn { display: flex; flex-direction: column; gap: 5px; }
+.w-txn-row { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 5px 7px; }
+.w-txn-icon { width: 16px; height: 16px; border-radius: 50%; background: rgba(99,102,241,0.3); }
+.w-txn-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.w-txn-name { height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; width: 70%; }
+.w-txn-amt { height: 5px; background: #4ade80; border-radius: 3px; width: 30%; }
+
+/* Accommodation */
+.screen-accom { background: linear-gradient(135deg, #0a1628 0%, #1a2744 100%); }
+.accom-mock { width: 88%; height: 80%; display: flex; flex-direction: column; gap: 6px; }
+.accom-search { height: 22px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+.accom-search-icon { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.3); }
+.accom-search-bar { flex: 1; height: 5px; background: rgba(255,255,255,0.12); border-radius: 3px; }
+.accom-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; flex: 1; }
+.accom-card { background: rgba(255,255,255,0.04); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+.accom-img { height: 50%; background: rgba(255,255,255,0.08); position: relative; }
+.accom-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(transparent, rgba(0,0,0,0.4)); }
+.accom-info { padding: 5px; display: flex; flex-direction: column; gap: 3px; }
+.accom-title { height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; width: 75%; }
+.accom-price { height: 5px; background: #f59e0b; border-radius: 3px; width: 45%; }
+.accom-rating { height: 4px; background: rgba(255,255,255,0.1); border-radius: 3px; width: 55%; }
+.accom-card:nth-child(1) .accom-img { background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(30,64,175,0.2)); }
+.accom-card:nth-child(2) .accom-img { background: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(5,150,105,0.2)); }
+.accom-card:nth-child(3) .accom-img { background: linear-gradient(135deg, rgba(245,158,11,0.3), rgba(217,119,6,0.2)); }
+
+/* Cafeteria */
+.screen-cafe { background: linear-gradient(135deg, #1a0a00 0%, #2d1200 100%); }
+.cafe-mock { width: 88%; height: 82%; display: flex; gap: 8px; }
+.cafe-menu { width: 35%; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+.cafe-cat { height: 6px; background: rgba(255,165,0,0.3); border-radius: 3px; }
+.cafe-cat.sel { background: #f97316; width: 70%; }
+.cafe-items { flex: 1; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+.cafe-item { display: flex; gap: 6px; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 5px; align-items: center; }
+.cafe-item-img { width: 22px; height: 22px; border-radius: 5px; background: rgba(249,115,22,0.2); flex-shrink: 0; }
+.cafe-item-info { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.cafe-item-name { height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; width: 75%; }
+.cafe-item-price { height: 5px; background: #f97316; border-radius: 3px; width: 35%; }
+.cafe-add { width: 12px; height: 12px; border-radius: 50%; background: #f97316; flex-shrink: 0; }
+.cafe-cart { width: 28%; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+.cafe-cart-item { height: 14px; background: rgba(255,255,255,0.05); border-radius: 5px; }
+.cafe-total { height: 20px; background: #f97316; border-radius: 6px; margin-top: auto; }
+
+.project-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(229,57,53,0.9);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.screenshot-note {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
+
+.project-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.project-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.project-title-wrap { flex: 1; }
+h3 { font-family: var(--f-display); font-size: 19px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 2px; }
+.project-sub { font-size: 12px; color: var(--muted); font-weight: 500; }
+.project-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.project-features { display: flex; flex-direction: column; gap: 6px; }
+.feature { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--muted); }
+.feature::before { content: '✓'; color: var(--accent); font-weight: 700; font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+.project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border); }
+.stack-tag { background: var(--tag-bg); color: var(--tag-fg); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 5px; }
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.skill-icon { font-size: 24px; margin-bottom: 10px; }
+.skill-title { font-family: var(--f-display); font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.skill-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.skill-list li { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.skill-list li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* CONTACT */
+.contact-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.contact-text h2 { font-size: clamp(22px, 3vw, 32px); }
+.contact-text p { color: var(--muted); margin-top: 6px; }
+.contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 24px clamp(16px, 5vw, 64px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-name { font-family: var(--f-display); font-weight: 700; font-size: 14px; }
+.footer-name span { color: var(--accent); }
+.footer-copy { font-size: 12px; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .stats { flex-wrap: wrap; }
+  .stat { flex: 1 1 45%; border-right: none; border-bottom: 1px solid var(--border); }
+  .contact-box { padding: 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .accom-cards { grid-template-columns: 1fr 1fr; }
+  .accom-card:last-child { display: none; }
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sandhya<span>.</span>Thakur</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Available for Freelance</div>
+  <h1>Full-Stack Developer<br>Building <em>Enterprise</em> Apps</h1>
+  <p class="hero-sub">I build secure, production-ready intranet and business applications — from complex workflows to real-time dashboards — using Angular and Node.js.</p>
+  <div class="hero-tags">
+    <span class="tag">Angular 18</span>
+    <span class="tag">Node.js</span>
+    <span class="tag">TypeScript</span>
+    <span class="tag">MySQL</span>
+    <span class="tag">NgRx</span>
+    <span class="tag">REST APIs</span>
+    <span class="tag">Role-Based Auth</span>
+    <span class="tag">Windows Server / IIS</span>
+  </div>
+  <div class="hero-cta">
+    <a href="https://www.upwork.com/freelancers/shivshakti?mp_source=share" class="btn-primary">Hire Me on Upwork</a>
+    <a href="#projects" class="btn-ghost">View Projects</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">4<span>+</span></div>
+    <div class="stat-label">Enterprise Projects</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3<span>+</span></div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100<span>%</span></div>
+    <div class="stat-label">Standalone Angular</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">IIS<span> ✓</span></div>
+    <div class="stat-label">Windows Deployment</div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-header">
+    <div class="section-eyebrow">Featured Work</div>
+    <h2>Enterprise Applications</h2>
+    <p class="section-sub">Production-grade systems built for real organizations, with full auth, role management, and audit trails.</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Blood Donation -->
+    <div class="project-card">
+      <div class="project-screen screen-blood">
+        <div class="ui-mock">
+          <div class="ui-sidebar">
+            <div class="ui-sidebar-item active"></div>
+            <div class="ui-sidebar-item"></div>
+            <div class="ui-sidebar-item"></div>
+            <div class="ui-sidebar-item"></div>
+            <div class="ui-sidebar-item"></div>
+          </div>
+          <div class="ui-main">
+            <div class="ui-topbar"></div>
+            <div class="ui-cards">
+              <div class="ui-card"><div class="num"></div><div class="lbl"></div></div>
+              <div class="ui-card"><div class="num"></div><div class="lbl"></div></div>
+              <div class="ui-card"><div class="num"></div><div class="lbl"></div></div>
+              <div class="ui-card"><div class="num"></div><div class="lbl"></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px">
+              <div class="ui-table-row"></div>
+              <div class="ui-table-row" style="width:90%"></div>
+              <div class="ui-table-row" style="width:80%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-badge">Angular 18 + Node</div>
+        <div class="screenshot-note">Replace with app screenshot</div>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-icon" style="background:rgba(198,40,40,0.15)">🩸</div>
+          <div class="project-title-wrap">
+            <h3>Blood Donation Drive</h3>
+            <div class="project-sub">Camp & Donor Management Platform</div>
+          </div>
+        </div>
+        <p class="project-desc">Enterprise-grade blood donation management system supporting multi-role workflows from camp registration through donor check-in, medical screening, and certificate generation.</p>
+        <div class="project-features">
+          <div class="feature">5 user roles — Super Admin, Admin, Camp Organizer, Operator</div>
+          <div class="feature">QR-based donor check-in and medical screening workflow</div>
+          <div class="feature">Real-time dashboard with blood inventory and camp analytics</div>
+          <div class="feature">Email notifications, audit logs, and downloadable certificates</div>
+          <div class="feature">NgRx state management with JWT authentication</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Angular 18</span>
+          <span class="stack-tag">NgRx</span>
+          <span class="stack-tag">Angular Material</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">JWT Auth</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secure Wallet -->
+    <div class="project-card">
+      <div class="project-screen screen-wallet">
+        <div class="wallet-mock">
+          <div class="w-topbar">
+            <div class="w-lbl"></div>
+            <div class="w-dot"></div>
+          </div>
+          <div class="w-balance-box">
+            <div class="w-bal-lbl"></div>
+            <div class="w-bal-num"></div>
+            <div class="w-bal-sub"></div>
+          </div>
+          <div class="w-txn">
+            <div class="w-txn-row">
+              <div class="w-txn-icon"></div>
+              <div class="w-txn-info"><div class="w-txn-name"></div><div class="w-txn-amt"></div></div>
+            </div>
+            <div class="w-txn-row">
+              <div class="w-txn-icon" style="background:rgba(239,68,68,0.3)"></div>
+              <div class="w-txn-info"><div class="w-txn-name"></div><div class="w-txn-amt" style="background:#ef4444;width:25%"></div></div>
+            </div>
+            <div class="w-txn-row">
+              <div class="w-txn-icon"></div>
+              <div class="w-txn-info"><div class="w-txn-name"></div><div class="w-txn-amt"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-badge">Secure App</div>
+        <div class="screenshot-note">Replace with app screenshot</div>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-icon" style="background:rgba(99,102,241,0.15)">💳</div>
+          <div class="project-title-wrap">
+            <h3>Secure Wallet</h3>
+            <div class="project-sub">Digital Wallet & Transaction System</div>
+          </div>
+        </div>
+        <p class="project-desc">Secure digital wallet application with encrypted transaction management, real-time balance tracking, and comprehensive financial audit capabilities for organizational use.</p>
+        <div class="project-features">
+          <div class="feature">End-to-end encrypted transaction records</div>
+          <div class="feature">Real-time balance updates and transaction history</div>
+          <div class="feature">Role-based access — Admin, Manager, User</div>
+          <div class="feature">Transaction approval workflows and audit trail</div>
+          <div class="feature">Export reports in CSV and PDF formats</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Angular</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">Encryption</span>
+          <span class="stack-tag">REST API</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accommodation -->
+    <div class="project-card">
+      <div class="project-screen screen-accom">
+        <div class="accom-mock">
+          <div class="accom-search">
+            <div class="accom-search-icon"></div>
+            <div class="accom-search-bar"></div>
+          </div>
+          <div class="accom-cards">
+            <div class="accom-card">
+              <div class="accom-img"></div>
+              <div class="accom-info">
+                <div class="accom-title"></div>
+                <div class="accom-price"></div>
+                <div class="accom-rating"></div>
+              </div>
+            </div>
+            <div class="accom-card">
+              <div class="accom-img"></div>
+              <div class="accom-info">
+                <div class="accom-title"></div>
+                <div class="accom-price"></div>
+                <div class="accom-rating"></div>
+              </div>
+            </div>
+            <div class="accom-card">
+              <div class="accom-img"></div>
+              <div class="accom-info">
+                <div class="accom-title"></div>
+                <div class="accom-price"></div>
+                <div class="accom-rating"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="project-badge">Booking System</div>
+        <div class="screenshot-note">Replace with app screenshot</div>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-icon" style="background:rgba(245,158,11,0.15)">🏨</div>
+          <div class="project-title-wrap">
+            <h3>Accommodation</h3>
+            <div class="project-sub">Room Booking & Management System</div>
+          </div>
+        </div>
+        <p class="project-desc">Full-featured accommodation management system for organizations with room inventory management, booking workflows, occupancy tracking, and automated billing.</p>
+        <div class="project-features">
+          <div class="feature">Room inventory with real-time availability calendar</div>
+          <div class="feature">Online booking with approval workflow</div>
+          <div class="feature">Guest management and check-in/check-out tracking</div>
+          <div class="feature">Automated billing and receipt generation</div>
+          <div class="feature">Occupancy reports and revenue analytics dashboard</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Angular</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">REST API</span>
+          <span class="stack-tag">PDF Reports</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cafeteria -->
+    <div class="project-card">
+      <div class="project-screen screen-cafe">
+        <div class="cafe-mock">
+          <div class="cafe-menu">
+            <div class="cafe-cat sel"></div>
+            <div class="cafe-cat"></div>
+            <div class="cafe-cat"></div>
+            <div class="cafe-cat"></div>
+            <div class="cafe-cat"></div>
+          </div>
+          <div class="cafe-items">
+            <div class="cafe-item">
+              <div class="cafe-item-img"></div>
+              <div class="cafe-item-info"><div class="cafe-item-name"></div><div class="cafe-item-price"></div></div>
+              <div class="cafe-add"></div>
+            </div>
+            <div class="cafe-item">
+              <div class="cafe-item-img"></div>
+              <div class="cafe-item-info"><div class="cafe-item-name"></div><div class="cafe-item-price"></div></div>
+              <div class="cafe-add"></div>
+            </div>
+            <div class="cafe-item">
+              <div class="cafe-item-img"></div>
+              <div class="cafe-item-info"><div class="cafe-item-name"></div><div class="cafe-item-price"></div></div>
+              <div class="cafe-add"></div>
+            </div>
+          </div>
+          <div class="cafe-cart">
+            <div class="cafe-cart-item"></div>
+            <div class="cafe-cart-item"></div>
+            <div class="cafe-cart-item"></div>
+            <div class="cafe-total"></div>
+          </div>
+        </div>
+        <div class="project-badge">POS System</div>
+        <div class="screenshot-note">Replace with app screenshot</div>
+      </div>
+      <div class="project-body">
+        <div class="project-header">
+          <div class="project-icon" style="background:rgba(249,115,22,0.15)">🍽️</div>
+          <div class="project-title-wrap">
+            <h3>Cafeteria</h3>
+            <div class="project-sub">Digital POS & Menu Management</div>
+          </div>
+        </div>
+        <p class="project-desc">Digital cafeteria management platform with online menu ordering, point-of-sale processing, inventory tracking, and daily meal analytics for institutional canteens.</p>
+        <div class="project-features">
+          <div class="feature">Digital menu with category management and item images</div>
+          <div class="feature">Order management with kitchen display and status tracking</div>
+          <div class="feature">Employee meal coupon and wallet integration</div>
+          <div class="feature">Daily/weekly sales reports and inventory alerts</div>
+          <div class="feature">QR-code based table ordering system</div>
+        </div>
+        <div class="project-stack">
+          <span class="stack-tag">Angular</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">QR Codes</span>
+          <span class="stack-tag">Real-time</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-header">
+    <div class="section-eyebrow">Technical Skills</div>
+    <h2>What I Work With</h2>
+    <p class="section-sub">Full-stack expertise across modern web frameworks, databases, and server infrastructure.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-title">Frontend</div>
+      <ul class="skill-list">
+        <li>Angular 18 (Standalone Components)</li>
+        <li>NgRx State Management</li>
+        <li>Angular Material & CDK</li>
+        <li>TypeScript, RxJS</li>
+        <li>Responsive & Mobile-First UI</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-title">Backend</div>
+      <ul class="skill-list">
+        <li>Node.js + Express.js</li>
+        <li>REST API Design</li>
+        <li>JWT Authentication</li>
+        <li>Role-Based Access Control</li>
+        <li>Email (Nodemailer / SMTP)</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-title">Database</div>
+      <ul class="skill-list">
+        <li>MySQL (raw mysql2 driver)</li>
+        <li>Complex Joins & Transactions</li>
+        <li>Schema Design & Migrations</li>
+        <li>Stored Procedures</li>
+        <li>Performance Optimization</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-title">DevOps & Deploy</div>
+      <ul class="skill-list">
+        <li>Windows Server + IIS</li>
+        <li>PM2 Process Manager</li>
+        <li>ARR Reverse Proxy</li>
+        <li>GitHub Version Control</li>
+        <li>Angular AOT Production Build</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔒</div>
+      <div class="skill-title">Security</div>
+      <ul class="skill-list">
+        <li>JWT + Refresh Token Flow</li>
+        <li>Input Validation & Sanitization</li>
+        <li>SQL Injection Prevention</li>
+        <li>CORS & Rate Limiting</li>
+        <li>Audit Log Implementation</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-title">Features I Build</div>
+      <ul class="skill-list">
+        <li>Multi-role dashboards & reporting</li>
+        <li>PDF / Certificate generation</li>
+        <li>QR code workflows</li>
+        <li>Real-time data tables</li>
+        <li>Hindi-language / India-specific apps</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-header">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2>Let's Work Together</h2>
+  </div>
+  <div class="contact-box">
+    <div class="contact-text">
+      <h2>Available for freelance projects</h2>
+      <p>I specialize in Angular + Node.js enterprise applications. Looking for an intranet app, a management system, or a complex workflow tool? Let's talk.</p>
+    </div>
+    <div class="contact-links">
+      <a href="https://www.upwork.com/freelancers/shivshakti?mp_source=share" target="_blank" class="btn-primary">View Upwork Profile</a>
+      <a href="https://github.com/shivshakti111/shivshakti.github.io" target="_blank" class="btn-ghost">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Sandhya<span>.</span>Thakur</div>
+  <div class="footer-copy">Full-Stack Developer · Angular & Node.js · India</div>
+</footer>
+
+</body></html>
